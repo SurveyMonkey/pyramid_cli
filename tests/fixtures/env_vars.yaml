@@ -1,0 +1,7 @@
+smlib:
+  smsqlalchemy:
+    url: !env ANSVC_DB_URL
+    echo: True
+
+  mongodb:
+    url: {{ MAIN_DB_USER }}:{{ MAIN_DB_PASSWORD }}/{{ DB_1234 }}

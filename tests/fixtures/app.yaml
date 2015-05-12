@@ -1,0 +1,8 @@
+default:
+  pyramid:
+    includes: [a, b, c]
+
+  a: b
+
+dev:
+  c: d

@@ -1,0 +1,21 @@
+formatters:
+  generic:
+    format: "%(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: generic
+
+loggers:
+  root:
+    level: INFO
+    handlers:
+    - console
+
+  papisvc:
+    qualname: papisvc
+    level: DEBUG
+    handlers:
+    - console

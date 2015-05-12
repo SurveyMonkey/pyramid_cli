@@ -1,0 +1,12 @@
+---
+database:
+  type: sql
+  sql:
+    main_database:
+      url: postgresql://username:password@server/database
+
+foo:
+  bar:
+    baz: !include logging.yaml
+
+--- !include logging.yaml
