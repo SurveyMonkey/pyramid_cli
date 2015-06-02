@@ -1,7 +1,6 @@
 import click
 from pyramid_cli.cli import main
 from montague import load_app, load_server
-from IPython.terminal.embed import InteractiveShellEmbed
 from pyramid.scripting import prepare
 
 @main.command()
@@ -25,6 +24,7 @@ def shell(config, shell):
         banner += '\n %-12s %s' % (key, values[key])
 
     if shell == 'ipython':
+        from IPython.terminal.embed import InteractiveShellEmbed
         InteractiveShellEmbed(banner2=banner, user_ns=env)()
     elif shell == 'bpython':
         from bpython import embed
