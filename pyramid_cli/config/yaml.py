@@ -10,7 +10,10 @@ from jinja2 import StrictUndefined
 import yaml
 import os
 import re
+import logging
+import sys
 
+logger = logging.getLogger(__name__)
 
 config_keys_re = re.compile(r'\{\{(?P<name>[\w\d\s]*)\}\}', re.IGNORECASE)
 env = Environment(undefined=StrictUndefined)
@@ -130,6 +133,12 @@ class YAMLConfigLoader:
             name = 'main'
         # Obviously this will throw a KeyError if the config isn't there.
         # A real implementation would have error handling here.
+        if name not in self._config['application']:
+            logger.error(
+                '%s is not defined in your application config' % name
+            )
+            sys.exit(-1)
+
         config = self._config['application'][name]
         return LoadableConfig.app(name=name, config=config, global_config={})
 

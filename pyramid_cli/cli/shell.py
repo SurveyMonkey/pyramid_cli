@@ -1,15 +1,16 @@
 import click
 from pyramid_cli.cli import main
-from montague import load_app, load_server
+from montague import load_app
 from pyramid.scripting import prepare
+
 
 @main.command()
 @click.option(
     '--shell', default='ipython', type=click.Choice(['ipython', 'bpython'])
 )
 @click.pass_obj
-def shell(config, shell):
-    app = load_app(config)
+def shell(obj, shell):
+    app = load_app(obj.config_file, name=obj.app_env)
     env = prepare()
     env['app'] = app
 

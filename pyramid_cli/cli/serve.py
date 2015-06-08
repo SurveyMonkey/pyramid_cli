@@ -5,7 +5,7 @@ from montague import load_app, load_server
 
 @main.command()
 @click.pass_obj
-def serve(config):
-    app = load_app(config)
-    server = load_server(config)
+def serve(obj):
+    app = load_app(obj.config_file, name=obj.app_env)
+    server = load_server(obj.config_file, name=obj.server_env)
     server(app)
