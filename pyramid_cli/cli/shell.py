@@ -1,7 +1,5 @@
 import click
 from pyramid_cli.cli import main
-from montague import load_app
-from pyramid.scripting import prepare
 
 
 @main.command()
@@ -10,9 +8,8 @@ from pyramid.scripting import prepare
 )
 @click.pass_obj
 def shell(obj, shell):
-    app = load_app(obj.config_file, name=obj.app_env)
-    env = prepare()
-    env['app'] = app
+    env = obj.pyramid_env
+    env['app'] = obj.app
 
     values = {
         'app': 'The WSGI application',

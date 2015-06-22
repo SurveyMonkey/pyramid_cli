@@ -1,7 +1,8 @@
 import importlib
 import pkgutil
-
 import click
+from montague import load_app
+from pyramid.scripting import prepare
 
 
 class Config(object):
@@ -9,6 +10,8 @@ class Config(object):
         self.config_file = config_file
         self.app_env = app_env
         self.server_env = server_env
+        self.app = load_app(config_file, name=app_env)
+        self.pyramid_env = prepare()
 
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
