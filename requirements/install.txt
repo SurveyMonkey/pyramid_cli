@@ -1,3 +1,5 @@
 click
-montague
+jinja2
+montague>=0.2.1
 pyramid
+pyyaml
