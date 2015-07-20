@@ -1,9 +1,6 @@
 # encoding: utf-8
-import copy
-from montague.interfaces import IConfigLoader, IConfigLoaderFactory
-from montague.structs import LoadableConfig, DEFAULT
+from montague.structs import LoadableConfig
 from montague.vendor import reify
-from zope.interface import directlyProvides, implementer
 from jinja2 import Environment
 from jinja2 import StrictUndefined
 
@@ -108,10 +105,7 @@ class Loader(yaml.SafeLoader):
         return load_yaml(file_path)
 
 
-@implementer(IConfigLoader)
 class YAMLConfigLoader:
-    directlyProvides(IConfigLoaderFactory)
-
     def __init__(self, path):
         self.path = path
 
@@ -122,15 +116,10 @@ class YAMLConfigLoader:
     def config(self):
         config = {}
         for section, vals in self._config.items():
-            if 'main' in vals:
-                vals = copy.deepcopy(vals)
-                vals[DEFAULT] = vals.pop('main')
             config[section] = vals
         return config
 
     def app_config(self, name):
-        if name is DEFAULT:
-            name = 'main'
         # Obviously this will throw a KeyError if the config isn't there.
         # A real implementation would have error handling here.
         if name not in self._config['application']:
@@ -143,9 +132,6 @@ class YAMLConfigLoader:
         return LoadableConfig.app(name=name, config=config, global_config={})
 
     def server_config(self, name):
-        if name is DEFAULT:
-            name = 'main'
-
         config = self._config['server'][name]
 
         return LoadableConfig.server(
